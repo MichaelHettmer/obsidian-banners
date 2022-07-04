@@ -55,21 +55,27 @@ const getViewPlugin = (plugin: BannersPlugin) => ViewPlugin.fromClass(class Bann
 
     // Add banner widgets if applicable
     if (src) {
+      contentEl.parentElement.addClass('has-banner');
       const settingsFacet = state.facet(bannerDecorFacet);
       widgets.push(
         Decoration.widget({ widget: new BannerWidget(plugin, bannerData, file.path, contentEl, settingsFacet) }),
         Decoration.widget({ widget: new SpacerWidget() }),
         Decoration.line({ class: 'has-banner' })
       );
+    } else {
+      contentEl.parentElement.removeClass('has-banner');
     }
 
     // Add icon widget if applicable
     if (icon) {
+      contentEl.parentElement.addClass('has-banner-icon');
       const settingsFacet = state.facet(iconDecorFacet);
       widgets.push(
         Decoration.widget({ widget: new IconWidget(plugin, icon, file, settingsFacet) }),
         Decoration.line({ class: "has-banner-icon", attributes: { "data-icon-v": settingsFacet.iconVerticalAlignment }})
       );
+    } else {
+      contentEl.parentElement.removeClass('has-banner-icon'); 
     }
 
     return Decoration.set(widgets.map(w => w.range(0)), true);
